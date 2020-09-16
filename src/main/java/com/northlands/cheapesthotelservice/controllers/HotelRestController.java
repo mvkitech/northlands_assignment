@@ -33,16 +33,21 @@ public class HotelRestController {
 
 		// Extract the best Hotel Offering from the HotelService component.
 		HotelOffer bestOffer = hotelService.getBestHotelOffer(latitude, longitude, checkInDate, checkOutDate);
+		if (bestOffer != null) {
 
-		// Please note that presently the code only looks for the lowest price
-		// offering. The distance from the target airport to the possible hotels 
-		// in relation to how much taxi cab fair could been might have also been 
-		// factored into this equation. But that seemed overkill especially since 
-		// taxi fairs are unknown and would need to be applied. 
-		
-		// Convert the HotelOffer service class into a local Hotel domain entity
-		// prior to returning the Hotel instance as a JSON output stream.
-		Hotel hotel = HotelOfferConverter.convertHotelOfferToHotel(bestOffer);
-		return new Gson().toJson(hotel);
+			// Please note that presently the code only looks for the lowest price
+			// offering. The distance from the target airport to the possible hotels 
+			// in relation to how much taxi cab fair could been might have also been 
+			// factored into this equation. But that seemed overkill especially since 
+			// taxi fairs are unknown and would need to be applied. 
+			
+			// Convert the HotelOffer service class into a local Hotel domain entity
+			// prior to returning the Hotel instance as a JSON output stream.
+			Hotel hotel = HotelOfferConverter.convertHotelOfferToHotel(bestOffer);
+			return new Gson().toJson(hotel);
+			
+		} else {
+			return null;
+		}
 	}
 }
